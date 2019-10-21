@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+    <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="canvas.js"></script>
+    <link rel = "stylesheet" href = "canvas.css">
+  </head>
+  <body>
+    <div id="canvasDiv" width="490" height="220"></div>
+    <script type="text/javascript"> $(document).ready(function() {
+    	 prepareCanvas();
+});</script>
+    <ul class="demoToolList">
+        <li>Clear the canvas: <button id="clearCanvas" type="button">Clear</button></li>
+        <li>Choose a size: <button id="chooseNormal" type="button">Normal</button><button id="chooseLarge" type="button">Large</button></li>
+        <li><span class="highlight">Choose a tool: </span><button id="chooseMarker" type="button">Marker</button><button id="chooseEraser" type="button">Eraser</button></li>
+    </ul>
+  </body>
+</html>
