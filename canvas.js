@@ -15,8 +15,9 @@
 
 var canvas;
 var context;
-var canvasWidth = 500;
-var canvasHeight = 500;
+var canvasWidth = 587;
+var canvasHeight = 572;
+
 var clickX = new Array();
 var clickY = new Array();
 var clickDrag = new Array();

@@ -2,9 +2,9 @@
 	border: 1px solid black;
 } 
 
-.canvasDiv{
-	height: 500;
-    width: 500;
+.canvasDiv_style{
+	width: 587px;
+    height: 572px;
 }
 
 .demoToolList {
