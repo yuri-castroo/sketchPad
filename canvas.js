@@ -27,6 +27,7 @@ var curTool = "marker";
 var curColor = "#df4b26";
 var curSize = "normal";
 var paint;
+
 /**
 * Calls the redraw function after all neccessary resources are loaded.
 */
@@ -44,6 +45,7 @@ function prepareCanvas()
 {
 	// Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
 	var canvasDiv = document.getElementById('canvasDiv');
+	document.getElementById('canvasDiv').style.background = "url('grid.jpg')";
 	canvas = document.createElement('canvas');
 	canvas.setAttribute('width', canvasWidth);
 	canvas.setAttribute('height', canvasHeight);
@@ -53,6 +55,7 @@ function prepareCanvas()
 		canvas = G_vmlCanvasManager.initElement(canvas);
 	}
 	context = canvas.getContext("2d"); // Grab the 2d canvas context
+
 	// Note: The above code is a workaround for IE 8 and lower. Otherwise we could have used:
 	//     context = document.getElementById('canvas').getContext("2d");
 
@@ -64,9 +67,9 @@ function prepareCanvas()
 		var mouseX = e.pageX - this.offsetLeft;
 		var mouseY = e.pageY - this.offsetTop;
 		
-		paint_simpleSizes = true;
-		addClickSimpleSizes(mouseX, mouseY, false);
-		redrawSimpleSizes();
+		paint = true;
+		addClick(mouseX, mouseY, false);
+		redraw();
 	});
 	
 	$('#canvas').mousemove(function(e){
@@ -151,9 +154,9 @@ function redraw()
 				
 	for(var i=0; i < clickX.length; i++) {	
 		if(clickSize[i] == "normal"){
-			radius = 5;
+			radius = 2;
 		}else if(clickSize[i] == "large"){
-			radius = 10;
+			radius = 5;
 		}
 
 		context.beginPath();
