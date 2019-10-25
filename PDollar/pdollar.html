@@ -22,11 +22,12 @@
 			_r = new PDollarRecognizer();
 
 			var canvas = document.getElementById('myCanvas');
+			document.getElementById('myCanvas').style.background = "url('grid.jpg')";
 			_g = canvas.getContext('2d');
-			_g.lineWidth = 3;
+			_g.lineWidth = 2;
 			_g.font = "16px Gentilis";
 			_rc = getCanvasRect(canvas); // canvas rect on page
-			_g.fillStyle = "rgb(255,255,136)";
+			// _g.fillStyle = "rgb(255,255,136)";
 			_g.fillRect(0, 0, _rc.width, 20);
 
 			_isDown = false;
@@ -64,7 +65,7 @@
 				}
 				_points[_points.length] = new Point(x, y, ++_strokeID);
 				drawText("Recording stroke #" + _strokeID + "...");
-				var clr = "rgb(" + rand(0,200) + "," + rand(0,200) + "," + rand(0,200) + ")";
+				var clr = "#df4b26";
 				_g.strokeStyle = clr;
 				_g.fillStyle = clr;
 				_g.fillRect(x - 4, y - 3, 9, 9);
@@ -182,8 +183,6 @@
 	<div id="Content">
 		<p class="subhead">Demo</p>
 		<p>
-			In the demo below, only one point-cloud template is loaded for each of the 16 gesture types. You can add additional
-			templates as you wish, and even define your own custom gesture templates.
 			<!-- Gesture image and canvas -->
 			<table border="0" cellspacing="10">
 				<tr>
@@ -204,12 +203,11 @@
 							</tr>
 						</table>
 
-						<canvas id="myCanvas" width="420" height="400" style="background-color:#dddddd"
+						<canvas id="myCanvas" width="587" height="572" 
 								onmousedown="mouseDownEvent(event.clientX, event.clientY, event.button)"
 								onmousemove="mouseMoveEvent(event.clientX, event.clientY, event.button)"
 								onmouseup="mouseUpEvent(event.clientX, event.clientY, event.button)"
 								oncontextmenu="return false;">
-							<span style="background-color:#ffff88;">The &lt;canvas&gt; element is not supported by this browser.</span>
 						</canvas>
 
 						<!--<p align="center" style="margin-top:10em;margin-bottom:10em"><i>Canvas coming soon...</i></p>-->

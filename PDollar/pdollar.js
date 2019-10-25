@@ -89,7 +89,7 @@ function Result(name, score, ms) // constructor
 //
 // PDollarRecognizer constants
 //
-const NumPointClouds = 16;
+const NumPointClouds = 16; // how many different templates there are 
 const NumPoints = 32;
 const Origin = new Point(0,0,0);
 //
