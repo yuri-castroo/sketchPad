@@ -17,7 +17,6 @@ var canvas;
 var context;
 var canvasWidth = 587;
 var canvasHeight = 572;
-
 var clickX = new Array();
 var clickY = new Array();
 var clickDrag = new Array();
@@ -28,7 +27,9 @@ var curTool = "marker";
 var curColor = "#df4b26";
 var curSize = "normal";
 var paint;
-
+var _strokeID;
+var _points;
+var _r;
 /**
 * Calls the redraw function after all neccessary resources are loaded.
 */
@@ -44,6 +45,10 @@ function resourceLoaded()
 */
 function prepareCanvas()
 {
+	_strokeID = 0;
+	_points = new Array();
+	//_r = new PDollarRecognizer();
+
 	// Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
 	var canvasDiv = document.getElementById('canvasDiv');
 	document.getElementById('canvasDiv').style.background = "url('grid.jpg')";
@@ -64,6 +69,10 @@ function prepareCanvas()
 	// ----------------
 	$('#canvas').mousedown(function(e)
 	{
+		// disable drag-select
+		document.onselectstart = function() {return false;}
+		document.onmousedown = function() {return false;} 
+
 		// Mouse down location
 		var mouseX = e.pageX - this.offsetLeft;
 		var mouseY = e.pageY - this.offsetTop;
