@@ -29,9 +29,52 @@
 			_rc = getCanvasRect(canvas); // canvas rect on page
 			// _g.fillStyle = "rgb(255,255,136)";
 			_g.fillRect(0, 0, _rc.width, 20);
+			
+			// if (_g){
+			// 	// canvas.addEventListener('mousedown', mouseDownEvent, false);
+			// 	// canvas.addEventListener('mousemove',mouseMoveEvent, false);
+			// 	// canvas.addEventListener('mouseup',mouseUpEvent, false);
+
+			// 	canvas.addEventListener('touchstart',touchStart, false);
+			// 	canvas.addEventListener('touchend', touchEnd, false);
+			// 	canvas.addEventListener('touchmove', touchMove, false);
+			// }
+
+			canvas.addEventListener("touchstart", function (e) {
+				mousePos = getTouchPos(canvas, e);
+				var touch = e.touches[0];
+				var mouseEvent = new MouseEvent("mousedown", {
+					clientX: touch.clientX,
+					clientY: touch.clientY
+				});
+				canvas.dispatchEvent(mouseEvent);
+				e.preventDefault();
+			}, false);
+			canvas.addEventListener("touchend", function (e) {
+				var mouseEvent = new MouseEvent("mouseup", {});
+				canvas.dispatchEvent(mouseEvent);
+				e.preventDefault();
+			}, false);
+			canvas.addEventListener("touchmove", function (e) {
+				var touch = e.touches[0];
+				var mouseEvent = new MouseEvent("mousemove", {
+					clientX: touch.clientX,
+					clientY: touch.clientY
+				});
+				canvas.dispatchEvent(mouseEvent);
+				e.preventDefault();
+			}, false);
 
 			_isDown = false;
 		}
+		function getTouchPos(canvasDom, touchEvent) {
+			var rect = canvasDom.getBoundingClientRect();
+			return {
+				x: touchEvent.touches[0].clientX - rect.left,
+				y: touchEvent.touches[0].clientY - rect.top
+			};
+		}
+
 		function getCanvasRect(canvas)
 		{
 			var w = canvas.width;
@@ -111,6 +154,61 @@
 				_strokeID = 0; // signal to begin new gesture on next mouse-down
 			}
 		}
+
+		// TOUCH EVENTS // 
+		function touchStart(x,y){
+			document.onselectstart = function() { return false; } // disable drag-select
+			document.onmousedown = function() { return false; } // disable drag-select
+			var e = event;
+			if (e.touches){
+				if (e.touches.length === 1)
+				{
+					_isDown = true;
+					event.clientX -= _rc.x - $(window).scrollLeft();
+					event.clientY -= _rc.y - $(window).scrollTop();
+					if (_strokeID == 0) // starting a new gesture
+					{
+						_points.length = 0;
+						_g.clearRect(0, 0, _rc.width, _rc.height);
+					}
+					_points[_points.length] = new Point(event.clientX, event.clientY, ++_strokeID);
+					drawText("Recording stroke #" + _strokeID + "...");
+					var clr = "#df4b26";
+					_g.strokeStyle = clr;
+					_g.fillStyle = clr;
+					_g.fillRect(event.clientX - 4, event.clientY - 3, 9, 9);
+				}
+				else if (e.touches.length === 2)
+				{
+					drawText("Recognizing gesture...");
+				}
+			}
+			event.preventDefault();
+		}
+		function touchMove(e){
+			if (_isDown)
+			{
+				event.clientX -= _rc.x - $(window).scrollLeft();
+				event.clientY -= _rc.y - $(window).scrollTop();
+				_points[_points.length] = new Point(event.clientX, event.clientY, _strokeID); // append
+				drawConnectedPoint(_points.length - 2, _points.length - 1);
+			}
+			event.preventDefault();
+		}
+		function touchEnd(){
+			document.onselectstart = function() { return true; } // enable drag-select
+			document.onmousedown = function() { return true; } // enable drag-select
+			if (event.touches.length === 1)
+			{
+				if (_isDown)
+				{
+					_isDown = false;
+					drawText("Stroke #" + _strokeID + " recorded.");
+				}
+			}
+		}
+
+
 		function drawConnectedPoint(from, to)
 		{
 			_g.beginPath();
@@ -177,6 +275,8 @@
 			drawText("Canvas cleared.");
 		}
 	// -->
+
+		
 	</script>
 </head>
 <body onload="onLoadEvent()">

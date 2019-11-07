@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Basic Sketch Data Collection</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="canvas.js"></script>
+</head>
+
+<body onload="init()">
+  <div id="maincontent">
+    <div id="saveLink"></div>
+
+    <div class="otherlook">
+        Width: <input type="text" id="widthInput" name="widthInput" maxlength="6" size="6">
+        Height: <input type="text" id="heightInput" name="heightInput" maxlength="6" size="6">
+        <input type="submit" value="Resize" onclick="resizeButton(drawCanvas, drawContext);">
+    </div>
+
+    <div>
+      <canvas id="drawCanvas" class="canvaslook" width="400" height="400" ></canvas>
+    </div>
+
+    <!-- Buttons Section -->
+    <div>
+      <input type="submit" value="Clear" class="elementlook" onclick="clearButton(drawCanvas, drawContext);">
+      <input type="submit" value="Undo" class="elementlook" onclick="undoButton(drawCanvas, drawContext);">
+      <input type="submit" value="Save" class="elementlook" onclick="saveButton(drawCanvas);">
+      <input type="submit" value="Download" class="elementlook" onclick="downloadButton();">
+    </div>
+
+    <!-- Status Updates Section -->
+    <div id="statusMessage" class="otherlook"></div>
+
+    <!-- Details Entry Section -->
+    <div id="detailslook">
+
+      <!-- Interpretation Entry Section-->
+      <div class="otherlook">
+        Interpretation: <input type="text" id="interpretationInput" name="interpretationInput" value="none">
+      </div>
+
+      <!-- Domains Entry Section-->
+      <div class="otherlook">
+        Domain(s): <input type="text" id="domainInput" name="domainInput" value="Sketch"><br/>
+        <em>(Note: Separate multiple domains by commas.)</em>
+      </div>
+
+    </div>
+  </div>
+  
+</body>
+</html>
